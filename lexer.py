@@ -35,19 +35,19 @@ class Lexer:
             char = input[i]
             
             match char:
-                case '{':
+                case TokenType.JSON_OPEN_BRACE.value:
                     self.tokens.append(Token(TokenType.JSON_OPEN_BRACE))
-                case '}':
+                case TokenType.JSON_CLOSE_BRACE.value:
                     self.tokens.append(Token(TokenType.JSON_CLOSE_BRACE))
-                case '[':
+                case TokenType.JSON_OPEN_BRACKET.value:
                     self.tokens.append(Token(TokenType.JSON_OPEN_BRACKET))
-                case ']':
+                case TokenType.JSON_CLOSE_BRACKET.value:
                     self.tokens.append(Token(TokenType.JSON_CLOSE_BRACKET))
-                case ':':
+                case TokenType.JSON_COLON.value:
                     self.tokens.append(Token(TokenType.JSON_COLON))
-                case ',':
+                case TokenType.JSON_COMMA.value:
                     self.tokens.append(Token(TokenType.JSON_COMMA))
-                case '"':
+                case TokenType.JSON_QUOTE.value:
                     str_token, index = self.get_string(input, i)
                     self.tokens.append(Token(TokenType.JSON_STRING, str_token))
                     i = index
