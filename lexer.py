@@ -23,11 +23,11 @@ class Token:
     def __repr__(self) -> str:
         return "Token(type={}, value={})".format(self.type, self.value)
 
-class Lex:
+class Lexer:
     def __init__(self):
         self.tokens: list[Token] = []
     
-    def lex(self, input: str):
+    def tokenize(self, input: str):
         i = 0
         length = len(input)
 
@@ -105,7 +105,7 @@ class Lex:
         
         return ''.join(int_tokens), i
 
-lex = Lex()
-input = '{"age": false }'
-lex.lex(input)
+lex = Lexer()
+input = '{"age": 123'
+lex.tokenize(input)
 print(lex.tokens)
