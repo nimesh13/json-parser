@@ -27,7 +27,7 @@ class Lexer:
     def __init__(self):
         self.tokens: list[Token] = []
     
-    def tokenize(self, input: str):
+    def tokenize(self, input: str) -> None:
         i = 0
         length = len(input)
 
@@ -76,7 +76,7 @@ class Lexer:
 
             i += 1
 
-    def get_string(self, str, i):
+    def get_string(self, str, i) -> tuple[str, int]:
         length = len(str)
         str_tokens = deque()
 
@@ -95,7 +95,7 @@ class Lexer:
 
         return ''.join(str_tokens), i
 
-    def get_number(self, str, i):
+    def get_number(self, str, i) -> tuple[str, int]:
         length = len(str)
         int_tokens = deque()
         
