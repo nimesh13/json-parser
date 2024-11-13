@@ -27,6 +27,14 @@ class Token:
                 self.tokens.append(None)
                 i += 4
                 continue
+            elif char == 't' and i + 4 < length and input[i: i + 4] == 'true':
+                self.tokens.append(True)
+                i += 4
+                continue
+            elif char == 'f' and i + 5 < length and input[i: i + 5] == 'false':
+                self.tokens.append(False)
+                i += 5
+                continue
             elif char == ' ':
                 pass
             else:
@@ -149,6 +157,6 @@ class Token:
         return ''.join(int_tokens), i
 
 token = Token()
-input = '{"name": "nimesh", "age": 123 }'
+input = '{"name": "nimesh", "age": 123, "high": tru }'
 token.lex(input)
 print(token.tokens)
