@@ -41,6 +41,14 @@ class Lexer:
             char = input[i]
             
             match char:
+                case TokenType.JSON_SPACE.value:
+                    self.tokens.append(Token(TokenType.JSON_SPACE))
+                case TokenType.JSON_CARRIAGE_RETURN.value:
+                    self.tokens.append(Token(TokenType.JSON_CARRIAGE_RETURN))
+                case TokenType.JSON_LINEFEED.value:
+                    self.tokens.append(Token(TokenType.JSON_LINEFEED))
+                case TokenType.JSON_TAB.value:
+                    self.tokens.append(Token(TokenType.JSON_TAB)) 
                 case TokenType.JSON_OPEN_BRACE.value:
                     self.tokens.append(Token(TokenType.JSON_OPEN_BRACE))
                 case TokenType.JSON_CLOSE_BRACE.value:
