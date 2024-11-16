@@ -11,9 +11,13 @@ class TokenType(Enum):
     JSON_COMMA = ','
     JSON_NUMBER = 'NUMBER'
     JSON_STRING = 'STRING'
-    JSON_NULL = 'NULL'
-    JSON_BOOL_TRUE = 'TRUE'
-    JSON_BOOL_FALSE = 'FALSE'
+    JSON_NULL = None
+    JSON_BOOL_TRUE = True
+    JSON_BOOL_FALSE = False
+    JSON_SPACE = ' '
+    JSON_CARRIAGE_RETURN = '\r'
+    JSON_LINEFEED = '\n'
+    JSON_TAB = '\t'
 
 class Token:
     def __init__(self, type: TokenType, value=None):
