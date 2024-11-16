@@ -23,6 +23,8 @@ class Token:
     def __init__(self, type: TokenType, value=None):
         self.type = type
         self.value = value
+        if not self.value:
+            self.value = self.type.value
     
     def __repr__(self) -> str:
         return "Token(type={}, value={})".format(self.type, self.value)
