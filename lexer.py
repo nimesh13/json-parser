@@ -110,8 +110,3 @@ class Lexer:
             i += 1
         
         return ''.join(int_tokens), i
-
-lex = Lexer()
-input = '{"age": 123'
-lex.tokenize(input)
-print(lex.tokens)
