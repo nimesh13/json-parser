@@ -15,15 +15,29 @@ class Parser:
         self.json = self.parse()
 
     def parse(self):
-        token = self.lexer.tokens[self.pointer]
-        match token.type:
-            case TokenType.JSON_OPEN_BRACE:
+        current_state = 0
+        states = [
+            {'open_brace': 1, 'open_bracket': 2, 'whitespace': 3},
+            {},
+            {},
+            {'open_brace': 1, 'open_bracket': 2, 'whitespace': 3}
+        ]
+        
+        while self.pointer < len(self.lexer.tokens):
+            token: Token = self.lexer.tokens[self.pointer]
+            
+            if token.type in JSON_WHITESPACE:
+                group = 'whitespace'
+            elif token.type == TokenType.JSON_OPEN_BRACE:
                 return self.parse_object()
-            case TokenType.JSON_OPEN_BRACKET:
+            elif token.type == TokenType.JSON_OPEN_BRACKET:
                 return self.parse_array()
-            case _:
+            else:
                 raise Exception(f"Unexpected token '{token.value}' at index {self.pointer}")
-
+            
+            current_state = states[current_state][group]
+            self.pointer += 1
+            
     def parse_object(self):
         obj = {}
         states = [
@@ -284,3 +298,8 @@ class Parser:
             raise Exception('Unexpected character \'{}\' at index {}'.format(self.lexer.tokens[self.pointer], self.pointer))
 
         return str_value
+    
+# string = '{"name": ""}'
+# parser = Parser(string)
+# print(parser.lexer.tokens)
+# print(parser.json)
