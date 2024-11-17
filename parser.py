@@ -1,4 +1,7 @@
 from collections import deque
+from math import inf
+from lexer import Lexer
+from lexer import TokenType, Token
 
 def get_number(str, i):
     length = len(str)
