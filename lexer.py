@@ -30,15 +30,16 @@ class Token:
         return "Token(type={}, value={})".format(self.type, self.value)
 
 class Lexer:
-    def __init__(self):
+    def __init__(self, input: str):
         self.tokens: list[Token] = []
+        self.input = input
+        self.length = len(input)
     
-    def tokenize(self, input: str) -> None:
+    def tokenize(self) -> None:
         i = 0
-        length = len(input)
 
-        while i < length:
-            char = input[i]
+        while i < self.length:
+            char = self.input[i]
             
             match char:
                 case TokenType.JSON_SPACE.value:
@@ -62,25 +63,27 @@ class Lexer:
                 case TokenType.JSON_COMMA.value:
                     self.tokens.append(Token(TokenType.JSON_COMMA))
                 case TokenType.JSON_QUOTE.value:
-                    str_token, index = self.get_string(input, i)
+                    self.tokens.append(Token(TokenType.JSON_QUOTE))
+                    str_token, index = self.get_string(i)
                     self.tokens.append(Token(TokenType.JSON_STRING, str_token))
                     i = index
+                    self.tokens.append(Token(TokenType.JSON_QUOTE))
                     continue
                 case char if char in '-0123456789':
-                    num_token, index = self.get_number(input, i)
+                    num_token, index = self.get_number(i)
                     self.tokens.append(Token(TokenType.JSON_NUMBER, num_token))
                     i = index
                     continue
-                case char if char == 'n' and i + 4 < length and input[i: i + 4] == 'null':
-                    self.tokens.append(Token(TokenType.JSON_NULL, None))
+                case char if char == 'n' and i + 4 < self.length and self.input[i: i + 4] == 'null':
+                    self.tokens.append(Token(TokenType.JSON_NULL))
                     i += 4
                     continue
-                case char if char == 't' and i + 4 < length and input[i: i + 4] == 'true':
-                    self.tokens.append(Token(TokenType.JSON_BOOL_TRUE, True))
+                case char if char == 't' and i + 4 < self.length and self.input[i: i + 4] == 'true':
+                    self.tokens.append(Token(TokenType.JSON_BOOL_TRUE))
                     i += 4
                     continue
-                case char if char == 'f' and i + 5 < length and input[i: i + 5] == 'false':
-                    self.tokens.append(Token(TokenType.JSON_BOOL_FALSE, False))
+                case char if char == 'f' and i + 5 < self.length and self.input[i: i + 5] == 'false':
+                    self.tokens.append(Token(TokenType.JSON_BOOL_FALSE))
                     i += 5
                     continue
                 case ' ':
@@ -90,18 +93,17 @@ class Lexer:
 
             i += 1
 
-    def get_string(self, str, i) -> tuple[str, int]:
-        length = len(str)
+    def get_string(self, i) -> tuple[str, int]:
         str_tokens = deque()
 
         # Starting character is opening quote. Move forward.
         i += 1
 
-        while i < length and str[i] != '"':
-            str_tokens.append(str[i])
+        while i < self.length and self.input[i] != '"':
+            str_tokens.append(self.input[i])
             i += 1
 
-        if i == length or str[i] != '"':
+        if i == self.length or self.input[i] != '"':
             raise Exception('Missing end quote.')
         
         # End character is closing quote. Move forward.
@@ -109,12 +111,11 @@ class Lexer:
 
         return ''.join(str_tokens), i
 
-    def get_number(self, str, i) -> tuple[str, int]:
-        length = len(str)
+    def get_number(self, i) -> tuple[str, int]:
         int_tokens = deque()
         
-        while i < length and str[i] in '-+0123456789.eE':
-            int_tokens.append(str[i])
+        while i < self.length and self.input[i] in '-+0123456789.eE':
+            int_tokens.append(self.input[i])
             i += 1
         
         return ''.join(int_tokens), i
