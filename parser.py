@@ -37,6 +37,8 @@ class Parser:
             
             current_state = states[current_state][group]
             self.pointer += 1
+        
+        raise Exception("Input should either have an object or an array.")
             
     def parse_object(self):
         obj = {}
@@ -298,8 +300,3 @@ class Parser:
             raise Exception('Unexpected character \'{}\' at index {}'.format(self.lexer.tokens[self.pointer], self.pointer))
 
         return str_value
-    
-# string = '{"name": ""}'
-# parser = Parser(string)
-# print(parser.lexer.tokens)
-# print(parser.json)
