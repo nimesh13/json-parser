@@ -284,7 +284,3 @@ class Parser:
             raise Exception('Unexpected character \'{}\' at index {}'.format(self.lexer.tokens[self.pointer], self.pointer))
 
         return str_value
-    
-input = '{"name":[[1E+27, false]]}'
-parser = Parser(input)
-print(parser.json)
