@@ -40,3 +40,4 @@ Of course this was not possible without resources online. Had a bunch of help:
 1. A guy's blog [post](https://notes.eatonphil.com/writing-a-simple-json-parser.html)
 2. json.org documentation. Tbh [this](https://www.json.org/json-en.html) site has all the diagrams that highlights the DFAs for all tokens. Converting it to python was the challenge.
 3. Following up from the previous point, [Valid Number](https://leetcode.com/problems/valid-number/) on [leetcode](https://leetcode.com/) is how I learned to implement DFAs LOL. God bless the editorial author(s)!
+4. Can you do anything without chatgpt now?
