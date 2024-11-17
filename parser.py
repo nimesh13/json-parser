@@ -11,9 +11,8 @@ class Parser:
         self.lexer = Lexer(str)
         self.lexer.tokenize()
         
-        # We don't know if the root is an object or an array.
-        self.json = None
         self.pointer = 0
+        self.json = self.parse()
 
     def parse(self):
         token = self.lexer.tokens[self.pointer]
@@ -288,4 +287,4 @@ class Parser:
     
 input = '{"name":[[1E+27, false]]}'
 parser = Parser(input)
-print(parser.parse())
+print(parser.json)
