@@ -31,6 +31,7 @@ python3 -m unittest unittests.py
 
 1. Parse special characters in string.
 2. `json-parse` in more languages.
+3. Will also upload the DFA drawings from my notebook.
 
 ### References
 
